@@ -72,7 +72,7 @@ int main(int argc, char *argv[], char *env[])
             else
             {
                 // close(tmp_fd);
-                waitpid(pid, NULL, WUNTRACED);
+                waitpid(pid, NULL, WUNTRACED);//preciso desse wait para esperar o comando (do filho) ser executado antes de ir para o próximo 
                 // tmp_fd = dup(0);
             }
         }
