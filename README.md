@@ -19,3 +19,5 @@ JOAN CD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ./joan /bin/echo "Changing to the directory now" ; cd /Users/davifern/Downloads ; /bin/ls ; cd /Users/davifern/dev -> Use do linux
 Changing to the directory now
 42-EXAM         file1.tmp       file2.tmp       file3.tmp
+
+gcc joan.c -o joan && ./joan /bin/echo "Hello World" "|" /usr/bin/tr 'a-z' 'A-Z' -- usando PIPE
