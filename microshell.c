@@ -32,6 +32,7 @@ int main(int argc, char *argv[], char *env[])
     int pid;
     (void)argc; // is needed in exam, because the exam tester compiles with -Wall -Wextra -Werror
     i = 0;
+    
     while (argv[i] && argv[i + 1]) //check if the end is reached
     {
         argv = &argv[i + 1];    //the new argv start after the ; or | ou do nome do programa
@@ -64,16 +65,20 @@ int main(int argc, char *argv[], char *env[])
             }
         }
         else if(i != 0 && strcmp(argv[i], "|") == 0) //pipe
-        {
-            pipe(fd); //fd[0] read, fd[1] write
+        {             //read from ========= write to
+            pipe(fd); //fd[0] read end, fd[1] write end
             pid = fork();
             if (pid == 0)
             {
+                close(fd[0]); 
+                dup2(fd[1], STDOUT_FILENO);
+                close(fd[1]); 
                 if (ft_execute(argv, i, env))
-                    return (1);
+                    return (1); 
             }
             else
             {
+                close(fd[1]);
             }
         }
     }
