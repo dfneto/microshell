@@ -8,9 +8,9 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/a.out",
-            // "args": ["/bin/ls"],
-            "args": ["/bin/ls", "|", "/usr/bin/grep", "microshell", ";", "/bin/echo", "i love my microshell."],
+            "program": "${workspaceFolder}/joan",
+            "args": ["ls"],
+            // "args": ["/bin/ls", "|", "/usr/bin/grep", "microshell", ";", "/bin/echo", "i love my microshell."],
             "cwd": "${workspaceFolder}"
         }
     ]

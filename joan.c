@@ -95,7 +95,7 @@ int main(int argc, char *argv[], char *env[])
                 close(fd[1]); //o processo pai não precisa escrever nada
                 close(tmp_fd);
                 tmp_fd = fd[0];
-                //close(fd[0]); não funciona com isso
+                //close(fd[0]); não funciona com isso, acho que porque temp_fd aponta para fd[0]
             }
         }
     }
