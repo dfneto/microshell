@@ -2,8 +2,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-extern char **environ;
-
 int err(char *str)
 {
     while (*str)
@@ -20,11 +18,9 @@ int cd(char **argv, int i)
     return 0;
 }
 
-int exec(char **argv, int i)
+int exec(char **argv, int i, char **envp)
 {
-    //fd[0] read
-    //fd[1] write
-    int fd[2];
+    int fd[2];  //fd[0] read, fd[1] write
     int status;
     int has_pipe = argv[i] && !strcmp(argv[i], "|"); // se argv == |
 
@@ -42,12 +38,12 @@ int exec(char **argv, int i)
             return err("error: fatal\n");
         if (!strcmp(*argv, "cd")) //se argv == cd
             return cd(argv, i);
-        execve(*argv, argv, environ);//recebe o path do comando a ser executado que é o primeiro parâmetro de argv (*argv), argv sao os argumentos para o comando e environ ??)
+        execve(*argv, argv, envp);//recebe o path do comando a ser executado que é o primeiro parâmetro de argv (*argv), argv sao os argumentos para o comando e environ ??)
         return err("error: cannot execute "), err(*argv), err("\n"); //executa essa linha no caso de execve disparar um erro
     }
 
     waitpid(pid, &status, 0); //Entendo que status vai receber o valor do status retornado pelo filho
-    if (has_pipe && (dup2(fd[0], 0) == -1 || close(fd[0]) == -1 || close(fd[1]) == -1)) //dup2(fd[0], 0): stdin aponta para fd[0]. Assim, quando for ler, vou ler para onde fd[0] aponta
+    if (has_pipe && (dup2(fd[0], 0) == -1 || close(fd[0]) == -1 || close(fd[1]) == -1)) //dup2(fd[0], 0): stdin passa a apontar para fd[0]. Assim, quando for ler, vou ler para onde fd[0] aponta
         return err("error: fatal\n");
     return WIFEXITED(status) && WEXITSTATUS(status);
     /*
@@ -60,7 +56,7 @@ int exec(char **argv, int i)
     */
 }
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **envp)
 {
     int    i = 0;
     int    status = 0;
@@ -74,7 +70,7 @@ int main(int argc, char **argv)
             while (argv[i] && strcmp(argv[i], "|") && strcmp(argv[i], ";")) //enquanto argv nao seja | ou ;
                 i++;
             if (i) //i=0 quando o comando termina com "|" ou ";", assim não executa
-                status = exec(argv, i); 
+                status = exec(argv, i, envp); 
         }
     }
     return status; //acredito que retorno o status do último comando executado
