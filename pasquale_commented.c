@@ -39,7 +39,7 @@ int exec(char **argv, int i, char **envp)
         argv[i] = 0; //essa funcao recebe sempre o i apontando para um elemento que nao faz parte do comando. Ex: /bin/ls | com i = 1. Ou seja, temos que terminar o comando com nulo e nao com |.
         if (has_pipe && (dup2(fd[1], 1) == -1 || close(fd[0]) == -1 || close(fd[1]) == -1)) //dup2(fd[1], 1): ao invés de printar no terminal, vou printar para onde fd[1] aponta
             return err("error: fatal\n");
-        if (!strcmp(*argv, "cd")) //se argv == cd
+        if (!strcmp(*argv, "cd")) //se argv == cd. para o caso cd ... | ...
             return cd(argv, i);
         execve(*argv, argv, envp);//recebe o path do comando a ser executado que é o primeiro parâmetro de argv (*argv), argv sao os argumentos para o comando e environ ??)
         return err("error: cannot execute "), err(*argv), err("\n"); //executa essa linha no caso de execve disparar um erro
