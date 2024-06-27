@@ -8,12 +8,17 @@ A micro version of shell
 
 ### Execução do microshell VS bash
 ./a.out /bin/echo "Changing to the directory now" ";" cd /Users/david/Desktop ";" /bin/ls   
-./a.out /bin/echo "Changing to the directory now" ; cd /Users/david/Desktop ; /bin/ls
+./a.out /bin/echo "Changing to the directory now" ; cd /Users/david/Desktop ; /bin/ls #bash 
 
-./a.out  cd /Users/davifern ; /bin/ls    
 ./a.out  cd /Users/davifern ";" /bin/ls    
+./a.out  cd /Users/davifern ; /bin/ls #bash     
 
 ### Entendendo melhor o main
 ./a.out   /bin/ls     "|"      /usr/bin/grep     microshell      “;”     /bin/echo       i love my microshell   
 ^argv   
 i=0 
+
+
+ls | grep ; echo
+echo | tr
+echo ; cd ; ls
