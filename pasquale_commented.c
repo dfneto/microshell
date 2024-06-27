@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+#include <stdio.h>
+
 int err(char *str)
 {
     while (*str)
@@ -20,6 +22,7 @@ int cd(char **argv, int i)
 
 int exec(char **argv, int i, char **envp)
 {
+
     int fd[2];  //fd[0] read, fd[1] write
     int status;
     int has_pipe = argv[i] && !strcmp(argv[i], "|"); // se argv == |
@@ -69,7 +72,7 @@ int main(int argc, char **argv, char **envp)
 	        i = 0;
             while (argv[i] && strcmp(argv[i], "|") && strcmp(argv[i], ";")) //enquanto argv nao seja | ou ;
                 i++;
-            if (i) //i=0 quando o comando termina com "|" ou ";", assim não executa
+            if (i) //i=0 quando o comando começa com "|" ou ";", assim não executa
                 status = exec(argv, i, envp); 
         }
     }
