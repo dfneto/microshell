@@ -1,3 +1,4 @@
+//if not pipe && cd: cd
 //if pipe: pipe
 //fork
 //filho
